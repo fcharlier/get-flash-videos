@@ -7,6 +7,13 @@ use FlashVideo::Utils;
 sub find_video {
   my ($self, $browser, $embed_url) = @_;
 
+  # Parse content to get :id, :uid, :av from 'var flashvars = { … id: "…", … uid: "…", …, av: "…", rms: "…"}'
+
+  # POST http://www.pinkbike.com/rms (:rms)
+  #   rmsD = {"mod":"video", "op":"gvtest", "id":":id", "uid":":uid", "q":"480|:av"}
+  #   rmsP = j1
+  # → { …, "rmsD":{"sUrl":":url", …}, …}
+
   # Extract filename from page title
   my $title = extract_title($browser);
   debug("Found title : " . $title);
